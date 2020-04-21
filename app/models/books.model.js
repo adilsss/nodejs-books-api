@@ -10,8 +10,7 @@ module.exports = mongoose => {
             img: String,
             link: String,
             language: String,
-            size: Number,
-            type: String
+            pLanguage: String
         },
         { timestamps: true }
     );

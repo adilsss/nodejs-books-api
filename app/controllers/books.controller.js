@@ -17,8 +17,7 @@ exports.create = (req, res) => {
             img: req.body.img,
             link: req.body.link,
             language: req.body.language,
-            size: req.body.size,
-            type: req.body.type
+            pLanguage: req.body.pLanguage,
     });
 
     book
@@ -49,6 +48,22 @@ exports.findAll = (req, res) => {
         });
       });
   };
+
+exports.findByLanguage = (req, res) => {
+    const pLanguage = req.query.pLanguage;
+    var condition = pLanguage ? { pLanguage: { $regex: new RegExp(pLanguage), $options: "i" } } : {};
+
+    Book.find(condition)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving books."
+            });
+        });
+};
 
 exports.findOne = (req, res) => {
     const id = req.params.id;
